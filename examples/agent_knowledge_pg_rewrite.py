@@ -26,7 +26,7 @@ query rewriting step inside the context provider's ``before_run`` method.
 
 Requires:
   - PostgreSQL with pgvector extension (see docker-compose.yml)
-  - An embedding model (GitHub Models, Azure OpenAI, or OpenAI)
+  - An embedding model (Azure OpenAI or OpenAI)
 """
 
 import asyncio
@@ -55,7 +55,7 @@ logger.setLevel(logging.INFO)
 
 # ── OpenAI clients (chat + embeddings) ───────────────────────────────
 load_dotenv(override=True)
-API_HOST = os.getenv("API_HOST", "github")
+API_HOST = os.getenv("API_HOST", "azure")
 POSTGRES_URL = os.getenv("POSTGRES_URL", "postgresql://admin:LocalPasswordOnly@db:5432/postgres")
 EMBEDDING_DIMENSIONS = 256  # Smaller dimension for efficiency
 
@@ -77,17 +77,6 @@ if API_HOST == "azure":
         api_key=sync_token_provider(),
     )
     embed_model = os.environ.get("AZURE_OPENAI_EMBEDDING_DEPLOYMENT", "text-embedding-3-small")
-elif API_HOST == "github":
-    chat_client = OpenAIChatClient(
-        base_url="https://models.github.ai/inference",
-        api_key=os.environ["GITHUB_TOKEN"],
-        model=os.getenv("GITHUB_MODEL", "openai/gpt-4.1-mini"),
-    )
-    embed_client = OpenAI(
-        base_url="https://models.github.ai/inference",
-        api_key=os.environ["GITHUB_TOKEN"],
-    )
-    embed_model = "text-embedding-3-small"
 else:
     chat_client = OpenAIChatClient(
         api_key=os.environ["OPENAI_API_KEY"], model=os.environ.get("OPENAI_MODEL", "gpt-4.1-mini")

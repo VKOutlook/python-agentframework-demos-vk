@@ -1,7 +1,7 @@
 <!--
 ---
 name: Python Agent Framework Demos
-description: Colección de ejemplos en Python para Microsoft Agent Framework usando GitHub Models o Azure AI Foundry.
+description: Colección de ejemplos en Python para Microsoft Agent Framework usando Azure AI Foundry.
 languages:
 - python
 products:
@@ -18,14 +18,13 @@ urlFragment: python-agentframework-demos
 [![Abrir en GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://codespaces.new/Azure-Samples/python-agentframework-demos)
 [![Abrir en Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Azure-Samples/python-agentframework-demos)
 
-Este repositorio ofrece ejemplos de [Microsoft Agent Framework](https://learn.microsoft.com/agent-framework/) usando LLMs de [GitHub Models](https://github.com/marketplace/models), [Azure AI Foundry](https://learn.microsoft.com/azure/ai-foundry/) u otros proveedores de modelos. Los modelos de GitHub son gratuitos para cualquiera con una cuenta de GitHub, hasta un [límite diario](https://docs.github.com/github-models/prototyping-with-ai-models#rate-limits).
+Este repositorio ofrece ejemplos de [Microsoft Agent Framework](https://learn.microsoft.com/agent-framework/) usando LLMs de [Azure AI Foundry](https://learn.microsoft.com/azure/ai-foundry/) u otros proveedores de modelos.
 
 * [Cómo empezar](#cómo-empezar)
   * [GitHub Codespaces](#github-codespaces)
   * [VS Code Dev Containers](#vs-code-dev-containers)
   * [Entorno local](#entorno-local)
 * [Configurar proveedores de modelos](#configurar-proveedores-de-modelos)
-  * [Usar GitHub Models](#usar-github-models)
   * [Usar modelos de Azure AI Foundry](#usar-modelos-de-azure-ai-foundry)
   * [Usar modelos de OpenAI.com](#usar-modelos-de-openaicom)
 * [Ejecutar los ejemplos en Python](#ejecutar-los-ejemplos-en-python)
@@ -96,35 +95,11 @@ El dev container incluye un servidor Redis, que se usa en el ejemplo `agent_hist
 
 ## Configurar proveedores de modelos
 
-Estos ejemplos se pueden ejecutar con Azure AI Foundry, OpenAI.com o GitHub Models, dependiendo de las variables de entorno que configures. Todos los scripts hacen referencia a las variables de entorno de un archivo `.env`, y se proporciona un archivo de ejemplo `.env.sample`. Las instrucciones específicas de cada proveedor se encuentran a continuación.
-
-## Usar GitHub Models
-
-Si abres este repositorio en GitHub Codespaces, puedes ejecutar los scripts gratis usando GitHub Models sin pasos adicionales, ya que tu `GITHUB_TOKEN` ya está configurado en el entorno de Codespaces.
-
-Si quieres ejecutar los scripts localmente, necesitas configurar la variable de entorno `GITHUB_TOKEN` con un token de acceso personal (PAT) de GitHub. Puedes crear un PAT siguiendo estos pasos:
-
-1. Ve a la configuración de tu cuenta de GitHub.
-2. Haz clic en "Developer settings" en la barra lateral izquierda.
-3. Haz clic en "Personal access tokens" en la barra lateral izquierda.
-4. Haz clic en "Tokens (classic)" o "Fine-grained tokens" según tu preferencia.
-5. Haz clic en "Generate new token".
-6. Ponle un nombre a tu token y selecciona los alcances que quieres otorgar. Para este proyecto, no necesitas alcances específicos.
-7. Haz clic en "Generate token".
-8. Copia el token generado.
-9. Configura la variable de entorno `GITHUB_TOKEN` en tu terminal o IDE:
-
-    ```shell
-    export GITHUB_TOKEN=tu_token_de_acceso_personal
-    ```
-
-10. Opcionalmente, puedes usar un modelo diferente a "gpt-4.1-mini" configurando la variable de entorno `GITHUB_MODEL`. Usa un modelo que soporte llamadas de funciones, como: `gpt-5`, `gpt-4.1-mini`, `gpt-4o`, `gpt-4o-mini`, `o3-mini`, `AI21-Jamba-1.5-Large`, `AI21-Jamba-1.5-Mini`, `Codestral-2501`, `Cohere-command-r`, `Ministral-3B`, `Mistral-Large-2411`, `Mistral-Nemo`, `Mistral-small`
+Estos ejemplos se pueden ejecutar con Azure AI Foundry u OpenAI.com, dependiendo de las variables de entorno que configures. Todos los scripts hacen referencia a las variables de entorno de un archivo `.env`, y se proporciona un archivo de ejemplo `.env.sample`. Las instrucciones específicas de cada proveedor se encuentran a continuación.
 
 ## Usar modelos de Azure AI Foundry
 
-Puedes ejecutar todos los ejemplos en este repositorio usando GitHub Models. Si quieres ejecutar los ejemplos usando modelos de Azure AI Foundry, necesitas provisionar los recursos de Azure AI, lo que generará costos.
-
-Este proyecto incluye infraestructura como código (IaC) para provisionar despliegues de Azure OpenAI de "gpt-4.1-mini" y "text-embedding-3-large" a través de Azure AI Foundry. La IaC está definida en el directorio `infra` y usa Azure Developer CLI para provisionar los recursos.
+Este proyecto incluye infraestructura como código (IaC) para provisionar despliegues de Azure OpenAI de "gpt-5-mini" y "text-embedding-3-large" a través de Azure AI Foundry. La IaC está definida en el directorio `infra` y usa Azure Developer CLI para provisionar los recursos.
 
 1. Asegúrate de tener instalado [Azure Developer CLI (azd)](https://aka.ms/install-azd).
 

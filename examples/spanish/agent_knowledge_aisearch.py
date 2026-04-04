@@ -21,7 +21,7 @@ precisos mediante planeación inteligente de consultas.
 
 Requiere:
     - Un servicio de Azure AI Search con una base de conocimiento (Knowledge Base)
-    - Un endpoint compatible con OpenAI (Azure OpenAI, GitHub Models u OpenAI)
+    - Un endpoint compatible con OpenAI (Azure OpenAI u OpenAI)
 
 Variables de entorno:
     - AZURE_SEARCH_ENDPOINT: Tu endpoint de Azure AI Search
@@ -54,7 +54,7 @@ logger.setLevel(logging.INFO)
 
 # ── Configuración ───────────────────────────────────────────────────
 load_dotenv(override=True)
-API_HOST = os.getenv("API_HOST", "github")
+API_HOST = os.getenv("API_HOST", "azure")
 
 SEARCH_ENDPOINT = os.environ["AZURE_SEARCH_ENDPOINT"]
 KNOWLEDGE_BASE_NAME = os.environ["AZURE_SEARCH_KNOWLEDGE_BASE_NAME"]
@@ -69,12 +69,6 @@ if API_HOST == "azure":
         base_url=f"{os.environ['AZURE_OPENAI_ENDPOINT']}/openai/v1/",
         api_key=token_provider,
         model=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"],
-    )
-elif API_HOST == "github":
-    client = OpenAIChatClient(
-        base_url="https://models.github.ai/inference",
-        api_key=os.environ["GITHUB_TOKEN"],
-        model=os.getenv("GITHUB_MODEL", "openai/gpt-4.1-mini"),
     )
 else:
     client = OpenAIChatClient(

@@ -21,7 +21,7 @@ llamar a una herramienta.
 
 Requisitos:
   - PostgreSQL con extensión pgvector (ver docker-compose.yml)
-  - Un modelo de embeddings (GitHub Models, Azure OpenAI u OpenAI)
+  - Un modelo de embeddings (Azure OpenAI u OpenAI)
 
 Ver también: agent_knowledge_sqlite.py para una versión más simple solo con SQLite (búsqueda por palabras clave).
 """
@@ -52,7 +52,7 @@ logger.setLevel(logging.INFO)
 
 # ── Clientes OpenAI (chat + embeddings) ──────────────────────────────
 load_dotenv(override=True)
-API_HOST = os.getenv("API_HOST", "github")
+API_HOST = os.getenv("API_HOST", "azure")
 POSTGRES_URL = os.getenv("POSTGRES_URL", "postgresql://admin:LocalPasswordOnly@db:5432/postgres")
 EMBEDDING_DIMENSIONS = 256  # Dimensión reducida para eficiencia
 
@@ -76,17 +76,6 @@ if API_HOST == "azure":
         api_key=sync_token_provider(),
     )
     embed_model = os.environ.get("AZURE_OPENAI_EMBEDDING_DEPLOYMENT", "text-embedding-3-small")
-elif API_HOST == "github":
-    chat_client = OpenAIChatClient(
-        base_url="https://models.github.ai/inference",
-        api_key=os.environ["GITHUB_TOKEN"],
-        model=os.getenv("GITHUB_MODEL", "openai/gpt-4.1-mini"),
-    )
-    embed_client = OpenAI(
-        base_url="https://models.github.ai/inference",
-        api_key=os.environ["GITHUB_TOKEN"],
-    )
-    embed_model = "text-embedding-3-small"
 else:
     chat_client = OpenAIChatClient(
         api_key=os.environ["OPENAI_API_KEY"], model=os.environ.get("OPENAI_MODEL", "gpt-4.1-mini")

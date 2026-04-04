@@ -23,7 +23,7 @@ logger.setLevel(logging.INFO)
 
 # Configurar cliente de OpenAI según el entorno
 load_dotenv(override=True)
-API_HOST = os.getenv("API_HOST", "github")
+API_HOST = os.getenv("API_HOST", "azure")
 
 async_credential = None
 if API_HOST == "azure":
@@ -33,12 +33,6 @@ if API_HOST == "azure":
         base_url=f"{os.environ['AZURE_OPENAI_ENDPOINT']}/openai/v1/",
         api_key=token_provider,
         model=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"],
-    )
-elif API_HOST == "github":
-    client = OpenAIChatClient(
-        base_url="https://models.github.ai/inference",
-        api_key=os.environ["GITHUB_TOKEN"],
-        model=os.getenv("GITHUB_MODEL", "openai/gpt-4.1-mini"),
     )
 else:
     client = OpenAIChatClient(

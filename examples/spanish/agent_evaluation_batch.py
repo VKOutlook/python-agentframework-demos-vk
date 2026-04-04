@@ -33,20 +33,13 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 load_dotenv(override=True)
-API_HOST = os.getenv("API_HOST", "github")
+API_HOST = os.getenv("API_HOST", "azure")
 
 if API_HOST == "azure":
     model_config = AzureOpenAIModelConfiguration(
         type="azure_openai",
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
         azure_deployment=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"],
-    )
-elif API_HOST == "github":
-    model_config = OpenAIModelConfiguration(
-        type="openai",
-        base_url="https://models.github.ai/inference",
-        api_key=os.environ["GITHUB_TOKEN"],
-        model="openai/gpt-4.1-mini",
     )
 else:
     model_config = OpenAIModelConfiguration(
